@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "NaSy Hub | AI Solutions & Electronic Music",
-  description: "Your AI Department, Without the Headcount. Managed AI services for enterprise + Electronic music production.",
+  description: "Your Creative Digital Space. AI-powered services and electronic music production.",
 };
 
 export default function RootLayout({

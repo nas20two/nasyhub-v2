@@ -8,8 +8,8 @@ const services = [
   {
     icon: Search,
     title: "Tender Intelligence",
-    description: "Automated opportunity discovery and analysis. Turn 20 hours of manual research into 2.",
-    metrics: "10x faster discovery",
+    description: "Automated opportunity discovery and analysis. Turn 20 hours of manual research into 2. Coming soon.",
+    metrics: "Coming soon",
   },
   {
     icon: Brain,
@@ -26,8 +26,23 @@ const services = [
   {
     icon: Shield,
     title: "Quality Inspection",
-    description: "AI-powered visual inspection for manufacturing and healthcare.",
-    metrics: "99.2% accuracy",
+    description: "AI-powered visual inspection for manufacturing and healthcare. Coming soon.",
+    metrics: "Coming soon",
+  },
+];
+
+const tools = [
+  {
+    title: "AI Readiness Audit",
+    description: "Free assessment tool. Discover your organization's AI maturity and get a personalized roadmap.",
+    url: "https://ai-readiness-audit-orpin.vercel.app",
+    cta: "Take the Audit",
+  },
+  {
+    title: "Agent Builder",
+    description: "Build custom AI agents without code. For members and enterprise clients.",
+    url: "https://agent-forge-v2-mu.vercel.app",
+    cta: "Build an Agent",
   },
 ];
 
@@ -47,21 +62,24 @@ export default function AIPage() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Link>
-          <span className="font-semibold">AI Solutions</span>
+          <span className="font-semibold text-foreground">AI Solutions</span>
           <div className="w-16" />
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-blue-400 text-sm tracking-widest uppercase mb-4">Managed AI Services</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+            <p className="text-primary text-sm tracking-widest uppercase mb-4">Managed AI Services</p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
               Your AI Department,
               <br />
               <span className="text-muted-foreground">Without the Headcount</span>
@@ -70,8 +88,12 @@ export default function AIPage() {
               One person + AI = team-level output. Deep domain expertise meets technology leverage.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center"><Clock className="w-4 h-4 mr-2" />15 years enterprise experience</span>
-              <span className="flex items-center"><BarChart3 className="w-4 h-4 mr-2" />Retainer model: $2K-5K/month</span>
+              <span className="flex items-center bg-secondary/50 px-4 py-2 rounded-full">
+                <Clock className="w-4 h-4 mr-2" />15 years enterprise experience
+              </span>
+              <span className="flex items-center bg-secondary/50 px-4 py-2 rounded-full">
+                <BarChart3 className="w-4 h-4 mr-2" />Retainer model: $2K-5K/month
+              </span>
             </div>
           </motion.div>
         </div>
@@ -87,7 +109,7 @@ export default function AIPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold mb-4">Services</h2>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Services</h2>
             <p className="text-muted-foreground">End-to-end AI implementation, managed for you</p>
           </motion.div>
 
@@ -99,13 +121,52 @@ export default function AIPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="p-6 rounded-xl border border-border bg-muted/30 hover:bg-muted/50 transition-colors"
+                className="p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md"
               >
-                <service.icon className="w-10 h-10 mb-4 text-blue-400" />
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                <service.icon className="w-10 h-10 mb-4 text-primary" />
+                <h3 className="text-xl font-semibold mb-2 text-foreground">{service.title}</h3>
                 <p className="text-muted-foreground mb-4">{service.description}</p>
-                <span className="text-sm text-blue-400 font-medium">{service.metrics}</span>
+                <span className="text-sm text-primary font-medium bg-primary/10 px-3 py-1 rounded-full">{service.metrics}</span>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tools */}
+      <section className="py-20 px-4 border-t border-border bg-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Try Our Tools</h2>
+            <p className="text-muted-foreground">Free tools to explore your AI opportunities</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {tools.map((tool, index) => (
+              <motion.a
+                key={tool.title}
+                href={tool.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="p-6 rounded-xl border border-border bg-card hover:bg-card/80 transition-all shadow-sm hover:shadow-md cursor-pointer block"
+              >
+                <h3 className="text-xl font-semibold mb-2 text-foreground">{tool.title}</h3>
+                <p className="text-muted-foreground mb-4">{tool.description}</p>
+                <span className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                  {tool.cta}
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </span>
+              </motion.a>
             ))}
           </div>
         </div>
@@ -121,7 +182,7 @@ export default function AIPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold mb-4">How It Works</h2>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">How It Works</h2>
             <p className="text-muted-foreground">Not SaaS. Not consulting. Managed service.</p>
           </motion.div>
 
@@ -133,11 +194,11 @@ export default function AIPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="flex items-start gap-6"
+                className="flex items-start gap-6 p-6 rounded-xl bg-card/50 border border-border"
               >
-                <span className="text-4xl font-bold text-muted-foreground/30">{item.step}</span>
+                <span className="text-4xl font-bold text-primary/30">{item.step}</span>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <h3 className="text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
                   <p className="text-muted-foreground">{item.desc}</p>
                 </div>
               </motion.div>
@@ -155,11 +216,11 @@ export default function AIPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to augment your team?</h2>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Ready to augment your team?</h2>
             <p className="text-muted-foreground mb-8">
               Book a free 30-minute discovery call to discuss your AI opportunities.
             </p>
-            <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors">
+            <button className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-colors shadow-lg hover:shadow-xl">
               Schedule Call
             </button>
           </motion.div>

@@ -1,48 +1,113 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* NaSy Hub - Warm & Creative Design System */
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  /* Warm cream background */
+  --background: 40 33% 96%;
+  --foreground: 25 30% 15%;
+
+  /* Warm card colors */
+  --card: 40 40% 98%;
+  --card-foreground: 25 30% 15%;
+
+  /* Terracotta primary */
+  --primary: 15 65% 50%;
+  --primary-foreground: 40 40% 98%;
+
+  /* Warm amber secondary */
+  --secondary: 35 60% 90%;
+  --secondary-foreground: 25 30% 20%;
+
+  /* Muted warm tones */
+  --muted: 35 30% 92%;
+  --muted-foreground: 25 20% 45%;
+
+  /* Accent - warm amber */
+  --accent: 35 70% 85%;
+  --accent-foreground: 25 30% 15%;
+
+  --border: 30 25% 85%;
+  --input: 30 25% 85%;
+  --ring: 15 65% 50%;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Deep warm dark background */
+  --background: 25 25% 10%;
+  --foreground: 35 30% 92%;
+
+  --card: 25 22% 14%;
+  --card-foreground: 35 30% 92%;
+
+  /* Warmer terracotta for dark mode */
+  --primary: 20 70% 60%;
+  --primary-foreground: 25 25% 10%;
+
+  --secondary: 25 30% 20%;
+  --secondary-foreground: 35 30% 90%;
+
+  --muted: 25 25% 18%;
+  --muted-foreground: 30 20% 60%;
+
+  --accent: 30 40% 25%;
+  --accent-foreground: 35 30% 92%;
+
+  --border: 25 20% 22%;
+  --input: 25 20% 22%;
+  --ring: 20 70% 60%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  min-height: 100vh;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-/* Custom scrollbar for dark theme */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: hsl(40 33% 96%);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: hsl(30 25% 75%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: hsl(30 25% 60%);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: hsl(25 25% 10%);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(25 20% 25%);
 }
