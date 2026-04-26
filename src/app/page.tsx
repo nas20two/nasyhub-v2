@@ -9,7 +9,7 @@ const sections = [
     href: "/ai",
     icon: Cpu,
     title: "AI Solutions",
-    description: "Your AI Department, Without the Headcount. Managed services for enterprise automation.",
+    description: "My AI Department, Without the Headcount. Managed services for enterprise automation.",
     color: "primary",
   },
   {
@@ -30,7 +30,7 @@ const sections = [
     href: "/contact",
     icon: Mail,
     title: "Contact",
-    description: "Have a project in mind? Let's discuss how AI can help your business.",
+    description: "Have a project in mind? Let's discuss how AI can help my business.",
     color: "primary",
   },
 ];
@@ -63,7 +63,7 @@ export default function Home() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-muted-foreground mb-4 text-sm tracking-widest uppercase"
         >
-          Your Creative Digital Space
+          My Creative Digital Space
         </motion.p>
 
         <motion.h2
