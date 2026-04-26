@@ -41,7 +41,7 @@ const tools = [
   {
     title: "Agent Builder",
     description: "Build custom AI agents without code. For members and enterprise clients.",
-    url: "https://agent-builder-v1.vercel.app",
+    url: "https://ai-agent-builder-hizhfwgtg-nasir-syeds-projects.vercel.app",
     cta: "Build an Agent",
   },
 ];
