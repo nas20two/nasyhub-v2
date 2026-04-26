@@ -41,7 +41,7 @@ const tools = [
   {
     title: "Agent Builder",
     description: "Build custom AI agents without code. For members and enterprise clients.",
-    url: "https://agent-forge-v2-mu.vercel.app",
+    url: "https://agent-builder-v1.vercel.app",
     cta: "Build an Agent",
   },
 ];
@@ -50,6 +50,33 @@ const process = [
   { step: "01", title: "Discovery", desc: "We analyze your workflows and identify AI opportunities" },
   { step: "02", title: "Implementation", desc: "Build and deploy custom solutions integrated with your stack" },
   { step: "03", title: "Optimization", desc: "Continuous improvement based on real usage and feedback" },
+];
+
+const automationExamples = [
+  {
+    title: "Multi-Agent Intelligence System",
+    description: "5 specialized agents (Rates Watch, AI Watch, Token Audit, Security, Backup) running daily on automated schedule.",
+    result: "20+ hours/week saved",
+    tech: "OpenClaw, crontab, DeepSeek",
+  },
+  {
+    title: "Music Distribution Pipeline",
+    description: "End-to-end automation: ACE Step music generation → n8n orchestration → YouTube (full + Shorts) → SoundCloud → X.",
+    result: "40+ tracks queued, 4 Shorts/day",
+    tech: "n8n, Telegram Bot, YouTube API, Pexels",
+  },
+  {
+    title: "AI Audit Lead Capture",
+    description: "Webhook-driven lead generation: User completes audit → Supabase storage → Email notification → Calendly booking.",
+    result: "100% automated lead flow",
+    tech: "Next.js, n8n, Supabase, Calendly",
+  },
+  {
+    title: "GitHub Issue Automation",
+    description: "Auto PR creation from labeled issues. Spawn subagent → Implement fix → Create PR → Monitor reviews → Merge.",
+    result: "Zero-touch code contributions",
+    tech: "gh-issues skill, OpenClaw subagents",
+  },
 ];
 
 export default function AIPage() {
@@ -167,6 +194,42 @@ export default function AIPage() {
                   <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
                 </span>
               </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Automation Examples */}
+      <section className="py-20 px-4 border-t border-border bg-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Automation Examples</h2>
+            <p className="text-muted-foreground">Real systems we&apos;ve built. Customized for your needs.</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {automationExamples.map((example, index) => (
+              <motion.div
+                key={example.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors"
+              >
+                <h3 className="text-lg font-semibold mb-2 text-foreground">{example.title}</h3>
+                <p className="text-muted-foreground text-sm mb-3">{example.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">{example.result}</span>
+                  <span className="text-xs text-muted-foreground">{example.tech}</span>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
