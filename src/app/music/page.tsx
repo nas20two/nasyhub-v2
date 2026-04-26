@@ -168,7 +168,7 @@ export default function MusicPage() {
               Custom tracks, licensing, and sound design available.
             </p>
             <a
-              href="mailto:nasiruddin.syed@hotmail.com"
+              href="mailto:contact@nasyhub.com"
               className="inline-block px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-xl transition-colors shadow-lg hover:shadow-xl"
             >
               Get in Touch

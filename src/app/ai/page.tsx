@@ -283,9 +283,12 @@ export default function AIPage() {
             <p className="text-muted-foreground mb-8">
               Book a free 30-minute discovery call to discuss your AI opportunities.
             </p>
-            <button className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-colors shadow-lg hover:shadow-xl">
+            <a
+              href="mailto:contact@nasyhub.com?subject=AI%20Discovery%20Call%20Request"
+              className="inline-block px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-colors shadow-lg hover:shadow-xl"
+            >
               Schedule Call
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
