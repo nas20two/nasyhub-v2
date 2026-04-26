@@ -9,7 +9,7 @@ const sections = [
     href: "/ai",
     icon: Cpu,
     title: "AI Solutions",
-    description: "My AI Department, Without the Headcount. Managed services for enterprise automation.",
+    description: "Your AI Department, Without the Headcount. Managed services for enterprise automation.",
     color: "primary",
   },
   {
@@ -30,7 +30,7 @@ const sections = [
     href: "/contact",
     icon: Mail,
     title: "Contact",
-    description: "Have a project in mind? Let's discuss how AI can help my business.",
+    description: "Have a project in mind? Let's discuss how AI can help your business.",
     color: "primary",
   },
 ];

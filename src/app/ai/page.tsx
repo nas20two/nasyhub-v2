@@ -14,13 +14,13 @@ const services = [
   {
     icon: Brain,
     title: "Knowledge Systems",
-    description: "SharePoint RAG implementation. My documents, searchable and intelligent.",
+    description: "SharePoint RAG implementation. Your documents, searchable and intelligent.",
     metrics: "Enterprise-grade security",
   },
   {
     icon: Zap,
     title: "Workflow Automation",
-    description: "Custom AI agents for my specific processes. Built, deployed, maintained.",
+    description: "Custom AI agents for your specific processes. Built, deployed, maintained.",
     metrics: "80% time reduction",
   },
   {
@@ -34,7 +34,7 @@ const services = [
 const tools = [
   {
     title: "AI Readiness Audit",
-    description: "Free assessment tool. Discover my organization's AI maturity and get a personalized roadmap.",
+    description: "Free assessment tool. Discover your organization's AI maturity and get a personalized roadmap.",
     url: "https://ai-readiness-audit-orpin.vercel.app",
     cta: "Take the Audit",
   },
@@ -47,8 +47,8 @@ const tools = [
 ];
 
 const process = [
-  { step: "01", title: "Discovery", desc: "We analyze my workflows and identify AI opportunities" },
-  { step: "02", title: "Implementation", desc: "Build and deploy custom solutions integrated with my stack" },
+  { step: "01", title: "Discovery", desc: "We analyze your workflows and identify AI opportunities" },
+  { step: "02", title: "Implementation", desc: "Build and deploy custom solutions integrated with your stack" },
   { step: "03", title: "Optimization", desc: "Continuous improvement based on real usage and feedback" },
 ];
 
@@ -171,7 +171,7 @@ export default function AIPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl font-bold mb-4 text-foreground">Try Our Tools</h2>
-            <p className="text-muted-foreground">Free tools to explore my AI opportunities</p>
+            <p className="text-muted-foreground">Free tools to explore your AI opportunities</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -210,7 +210,7 @@ export default function AIPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl font-bold mb-4 text-foreground">Automation Examples</h2>
-            <p className="text-muted-foreground">Real systems we&apos;ve built. Customized for my needs.</p>
+            <p className="text-muted-foreground">Real systems we&apos;ve built. Customized for your needs.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -279,9 +279,9 @@ export default function AIPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold mb-4 text-foreground">Ready to augment my team?</h2>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Ready to augment your team?</h2>
             <p className="text-muted-foreground mb-8">
-              Book a free 30-minute discovery call to discuss my AI opportunities.
+              Book a free 30-minute discovery call to discuss your AI opportunities.
             </p>
             <a
               href="mailto:contact@nasyhub.com?subject=AI%20Discovery%20Call%20Request"
