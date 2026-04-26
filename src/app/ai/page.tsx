@@ -107,7 +107,7 @@ export default function AIPage() {
           >
             <p className="text-primary text-sm tracking-widest uppercase mb-4">Managed AI Services</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
-              My AI Department,
+              Your AI Department,
               <br />
               <span className="text-muted-foreground">Without the Headcount</span>
             </h1>
