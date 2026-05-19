@@ -8,8 +8,9 @@ const services = [
   {
     icon: Search,
     title: "Tender Intelligence",
-    description: "Automated opportunity discovery and analysis. Turn 20 hours of manual research into 2. Coming soon.",
-    metrics: "Coming soon",
+    description: "AI-powered government tender discovery and analysis. Real-time AusTender OCDS API integration with MCP architecture.",
+    metrics: "Live at tenders.nasyhub.com",
+    url: "https://tenders.nasyhub.com",
   },
   {
     icon: Brain,
@@ -148,12 +149,15 @@ export default function AIPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md"
+                className={`p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md ${service.url ? 'cursor-pointer' : ''}`}
+                onClick={() => service.url && window.open(service.url, '_blank')}
               >
                 <service.icon className="w-10 h-10 mb-4 text-primary" />
                 <h3 className="text-xl font-semibold mb-2 text-foreground">{service.title}</h3>
                 <p className="text-muted-foreground mb-4">{service.description}</p>
-                <span className="text-sm text-primary font-medium bg-primary/10 px-3 py-1 rounded-full">{service.metrics}</span>
+                <span className={`text-sm font-medium px-3 py-1 rounded-full ${service.url ? 'text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/30' : 'text-primary bg-primary/10'}`}>
+                  {service.metrics}
+                </span>
               </motion.div>
             ))}
           </div>
