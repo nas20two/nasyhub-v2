@@ -41,9 +41,9 @@ const tools = [
   },
   {
     title: "AI Explainy",
-    description: "Your AI companion for explaining complex tech concepts and jargon in simple, clear terms.",
-    url: "https://ai-assistant-clean.vercel.app",
-    cta: "Try AI Explainy",
+    description: "V2: Jargon buster + Chat + Repo Explainer. Paste any GitHub URL for instant architecture analysis.",
+    url: "https://ai-explainy-v2.vercel.app",
+    cta: "Try AI Explainy V2",
   },
   {
     title: "Agent Builder",
