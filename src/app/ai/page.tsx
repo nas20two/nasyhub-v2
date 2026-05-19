@@ -40,6 +40,12 @@ const tools = [
     cta: "Take the Audit",
   },
   {
+    title: "AI Explainy",
+    description: "Your AI companion for explaining complex tech concepts and jargon in simple, clear terms.",
+    url: "https://ai-assistant-clean.vercel.app",
+    cta: "Try AI Explainy",
+  },
+  {
     title: "Agent Builder",
     description: "Build custom AI agents without code. For members and enterprise clients.",
     url: "https://ai-agent-builder-hizhfwgtg-nasir-syeds-projects.vercel.app",
@@ -178,7 +184,7 @@ export default function AIPage() {
             <p className="text-muted-foreground">Free tools to explore your AI opportunities</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {tools.map((tool, index) => (
               <motion.a
                 key={tool.title}
