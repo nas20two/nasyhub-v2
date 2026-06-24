@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { email, product, tier } = body;
+  const { email, product, tier, template, formData } = body;
+
   if (!email) {
     return NextResponse.json({ error: "Email required" }, { status: 400 });
   }
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
   try {
     const params = new URLSearchParams();
     params.append("mode", "payment");
-    params.append("success_url", `${req.nextUrl.origin}/atom/success?session_id={CHECKOUT_SESSION_ID}`);
+    params.append("success_url", `${req.nextUrl.origin}/atom/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier || "premium"}`);
     params.append("cancel_url", `${req.nextUrl.origin}/atom`);
     params.append("line_items[0][price_data[currency]]", "usd");
     params.append("line_items[0][price_data[product_data[name]]", `Atom — ${tierConfig.name}`);
@@ -39,7 +40,14 @@ export async function POST(req: NextRequest) {
     params.append("metadata[type]", "atom_short");
     params.append("metadata[tier]", tier || "premium");
     params.append("metadata[product]", product);
+    params.append("metadata[template]", template || "custom");
     params.append("metadata[source]", "atom_landing_page");
+
+    // Pass form data if provided (limit to 1000 chars to avoid Stripe metadata limits)
+    if (formData) {
+      const formDataStr = JSON.stringify(formData);
+      params.append("metadata[form_data]", formDataStr.slice(0, 1000));
+    }
 
     const response = await fetch(`${STRIPE_API}/checkout/sessions`, {
       method: "POST",
