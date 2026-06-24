@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Loader2, CheckCircle, Upload, Heart } from "lucide-react";
 import Link from "next/link";
@@ -54,6 +54,10 @@ export default function WellnessPage() {
   const [done, setDone] = useState(false);
   const [jobId, setJobId] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    document.title = "Wellness & Reiki Video Template | Atom";
+  }, []);
 
   const updateField = useCallback(<K extends keyof FormData>(key: K, value: FormData[K]) => {
     setForm((prev) => {

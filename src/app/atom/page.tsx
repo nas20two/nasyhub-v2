@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Premium Atom Theme — Blue → Orange gradient signature
 const atomStyles = `
@@ -160,6 +160,10 @@ export default function AtomPage() {
   const [tier, setTier] = useState("premium");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    document.title = "Atom — AI Video Generator | Real Estate, Wellness & Healthcare Templates";
+  }, []);
 
   const handleCheckout = async () => {
     if (!email) { setError("Email is required"); return; }
