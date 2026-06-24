@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2 } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -79,6 +79,16 @@ const templates = [
     status: "active" as const,
     href: "/atom/healthcare",
     badge: "",
+  },
+  {
+    id: "trades",
+    name: "Trades & Home Services",
+    icon: Wrench,
+    description: "Before & after showcases for plumbers, electricians, landscapers, and more.",
+    accent: "orange",
+    status: "active" as const,
+    href: "/atom/trades",
+    badge: "New",
   },
   {
     id: "more",
