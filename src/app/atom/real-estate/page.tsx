@@ -12,6 +12,7 @@ interface FormData {
   suburb: string;
   state: string;
   propertyType: string;
+  videoStyle: string;
   bedrooms: string;
   bathrooms: string;
   parking: string;
@@ -28,6 +29,7 @@ interface FormData {
 
 const defaultForm: FormData = {
   streetAddress: "", suburb: "", state: "NSW", propertyType: "Apartment",
+  videoStyle: "Standard Listing",
   bedrooms: "", bathrooms: "", parking: "", price: "",
   keyFeature1: "", keyFeature2: "", keyFeature3: "",
   agentName: "", agency: "", email: "", ctaText: "Book an Inspection", ctaLink: "",
@@ -35,6 +37,7 @@ const defaultForm: FormData = {
 
 const states = ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"];
 const propertyTypes = ["Apartment", "House", "Townhouse", "Duplex", "Land"];
+const videoStyles = ["Standard Listing", "Luxury Showcase", "Development/Off-Plan", "Rental", "Commercial"];
 
 export default function RealEstatePage() {
   const [form, setForm] = useState<FormData>(() => {
@@ -174,6 +177,12 @@ export default function RealEstatePage() {
                     <label className={labelClass}>Property Type</label>
                     <select value={form.propertyType} onChange={(e) => updateField("propertyType", e.target.value)} className={inputClass}>
                       {propertyTypes.map((t) => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelClass}>Video Style</label>
+                    <select value={form.videoStyle} onChange={(e) => updateField("videoStyle", e.target.value)} className={inputClass}>
+                      {videoStyles.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div className="grid grid-cols-3 gap-3">
