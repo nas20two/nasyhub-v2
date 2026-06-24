@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -122,6 +122,23 @@ const industries = [
       "Perfect for Instagram Reels, TikTok, and Google ads",
       "12 business types: PT, yoga, CrossFit, martial arts, online coaching",
       "6 vibes: high energy, mindful, community, premium, outdoor, rehab",
+    ],
+    price: "From $19",
+  },
+  {
+    id: "automotive",
+    name: "Automotive & Dealerships",
+    icon: Car,
+    accent: "blue",
+    color: "hsl(218, 100%, 50%)",
+    bg: "hsla(218, 100%, 50%, 0.08)",
+    href: "/atom/automotive",
+    tagline: "Showcases for car dealers, detailers, mechanics & auto shops",
+    bullets: [
+      "Showcase inventory, service quality, and customer trust",
+      "11 business types: dealers, detailers, mechanics, car wash, rentals",
+      "6 vibes: premium, professional, sporty, family, fast, budget",
+      "Replace $3k+ commercial shoots with a single form submission",
     ],
     price: "From $19",
   },

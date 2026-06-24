@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap, Dumbbell } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -118,6 +118,16 @@ const templates = [
     accent: "orange",
     status: "active" as const,
     href: "/atom/fitness",
+    badge: "New",
+  },
+  {
+    id: "automotive",
+    name: "Automotive & Dealerships",
+    icon: Car,
+    description: "Showcases for car dealers, detailers, mechanics, and auto shops.",
+    accent: "blue",
+    status: "active" as const,
+    href: "/atom/automotive",
     badge: "New",
   },
   {
