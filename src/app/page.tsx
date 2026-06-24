@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Music, Smartphone, Mail, ArrowRight } from "lucide-react";
+import { Cpu, Music, Smartphone, Mail, ArrowRight, Newspaper, FileCheck, AtomIcon, Heart } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -11,6 +11,21 @@ const sections = [
     title: "AI Solutions",
     description: "Your AI Department, Without the Headcount. Managed services for enterprise automation.",
     color: "primary",
+  },
+  {
+    href: "/atom",
+    icon: AtomIcon,
+    title: "Atom",
+    description: "Your product. 60 seconds. Done. AI-generated promo videos from a single product description.",
+    color: "primary",
+  },
+  {
+    href: "#",
+    icon: Heart,
+    title: "AI Health",
+    description: "AI-powered fertility patient education and healthcare automation. Coming soon.",
+    color: "primary",
+    badge: "Coming Soon",
   },
   {
     href: "/apps",
@@ -31,6 +46,20 @@ const sections = [
     icon: Mail,
     title: "Contact",
     description: "Have a project in mind? Let's discuss how AI can help your business.",
+    color: "primary",
+  },
+  {
+    href: "/ai/insights",
+    icon: Newspaper,
+    title: "AI Insights",
+    description: "Curated AI news, tool launches, LLM releases, and market trends. Updated weekly.",
+    color: "primary",
+  },
+  {
+    href: "/marketplace",
+    icon: FileCheck,
+    title: "Agent Marketplace",
+    description: "Our Tender Intelligence agent sells services on Daydreams/TaskMarket and available for direct purchase via Stripe.",
     color: "primary",
   },
 ];
@@ -81,11 +110,37 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-lg text-muted-foreground mb-16 max-w-2xl mx-auto"
+          className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
         >
           AI Solutions Engineer & Electronic Music Producer. 
           Bridging enterprise experience with cutting-edge AI implementation.
         </motion.p>
+
+        {/* Marketplace Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.5 }}
+          className="mb-12"
+        >
+          <Link
+            href="/marketplace"
+            className="group block relative p-4 rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm hover:bg-card/80 transition-all shadow-sm hover:shadow-md"
+          >
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-lg">🤖</span>
+              <div className="flex-1 text-left">
+                <span className="font-medium text-foreground">
+                  Live on Daydreams/TaskMarket
+                </span>
+                <span className="text-muted-foreground ml-2 hidden sm:inline">
+                  — Our Tender Intelligence agent now sells services on the agent commerce marketplace
+                </span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0" />
+            </div>
+          </Link>
+        </motion.div>
 
         {/* Navigation Cards */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -100,11 +155,18 @@ export default function Home() {
               >
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-orange-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <section.icon className={`w-10 h-10 mb-4 ${section.color === "amber" ? "text-amber-600" : "text-primary"}`} />
-                <h3 className="text-xl font-semibold mb-2 text-foreground">{section.title}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-foreground flex items-center gap-3">
+                  {section.title}
+                  {section.badge && (
+                    <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 border border-amber-500/30">
+                      {section.badge}
+                    </span>
+                  )}
+                </h3>
                 <p className="text-muted-foreground text-sm mb-4">{section.description}</p>
                 <div className={`flex items-center text-sm font-medium ${section.color === "amber" ? "text-amber-600" : "text-primary"} group-hover:opacity-80 transition-colors`}>
-                  Explore
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  {section.badge ? "Coming Soon" : "Explore"}
+                  {!section.badge && <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
                 </div>
               </motion.div>
             </Link>
@@ -117,7 +179,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.6 }}
-        className="absolute bottom-8 text-muted-foreground text-sm"
+        className="relative mt-16 mb-8 text-muted-foreground text-sm"
       >
         © 2026 NaSy Hub. Built with creativity.
       </motion.footer>

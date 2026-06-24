@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "atom.nasyhub.com" }],
+      "destination": "https://nasyhub.com/atom/$1",
+      "permanent": false
+    }
+  ]
+}
