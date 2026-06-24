@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -88,6 +88,16 @@ const templates = [
     accent: "orange",
     status: "active" as const,
     href: "/atom/trades",
+    badge: "New",
+  },
+  {
+    id: "hospitality",
+    name: "Hospitality & Venues",
+    icon: UtensilsCrossed,
+    description: "Cinematic venue showcases for restaurants, cafes, hotels, bars, and breweries.",
+    accent: "orange",
+    status: "active" as const,
+    href: "/atom/hospitality",
     badge: "New",
   },
   {

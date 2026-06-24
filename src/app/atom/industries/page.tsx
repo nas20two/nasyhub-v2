@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Heart, Stethoscope, Wrench, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -74,10 +74,27 @@ const industries = [
     ],
     price: "From $19",
   },
+  {
+    id: "hospitality",
+    name: "Hospitality & Venues",
+    icon: UtensilsCrossed,
+    accent: "orange",
+    color: "hsl(15, 65%, 55%)",
+    bg: "hsla(15, 65%, 55%, 0.08)",
+    href: "/atom/hospitality",
+    tagline: "Cinematic venue showcases for restaurants, cafes & hotels",
+    bullets: [
+      "Showcase your atmosphere, signature dishes, and experience",
+      "Perfect for Instagram Reels, TikTok, and Google Business Profile",
+      "Music overlay matches your venue's vibe",
+      "Replace $3k+ videography with a single form submission",
+    ],
+    price: "From $19",
+  },
 ];
 
 const iconComponents: Record<string, React.ElementType> = {
-  Building2, Heart, Stethoscope, Wrench,
+  Building2, Heart, Stethoscope, Wrench, UtensilsCrossed,
 };
 
 export default function IndustriesPage() {
