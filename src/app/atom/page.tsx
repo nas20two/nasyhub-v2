@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap, Dumbbell } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -108,6 +108,16 @@ const templates = [
     accent: "blue",
     status: "active" as const,
     href: "/atom/education",
+    badge: "New",
+  },
+  {
+    id: "fitness",
+    name: "Fitness & Gym",
+    icon: Dumbbell,
+    description: "High-energy promos for gyms, personal trainers, yoga studios, and coaches.",
+    accent: "orange",
+    status: "active" as const,
+    href: "/atom/fitness",
     badge: "New",
   },
   {

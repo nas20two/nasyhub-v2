@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -108,10 +108,27 @@ const industries = [
     ],
     price: "From $19",
   },
+  {
+    id: "fitness",
+    name: "Fitness & Gym",
+    icon: Dumbbell,
+    accent: "orange",
+    color: "hsl(15, 65%, 55%)",
+    bg: "hsla(15, 65%, 55%, 0.08)",
+    href: "/atom/fitness",
+    tagline: "High-energy promos for gyms, trainers & studios",
+    bullets: [
+      "Showcase your training, transformations, and community",
+      "Perfect for Instagram Reels, TikTok, and Google ads",
+      "12 business types: PT, yoga, CrossFit, martial arts, online coaching",
+      "6 vibes: high energy, mindful, community, premium, outdoor, rehab",
+    ],
+    price: "From $19",
+  },
 ];
 
 const iconComponents: Record<string, React.ElementType> = {
-  Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap,
+  Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell,
 };
 
 export default function IndustriesPage() {
