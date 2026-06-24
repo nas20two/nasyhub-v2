@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -91,10 +91,27 @@ const industries = [
     ],
     price: "From $19",
   },
+  {
+    id: "education",
+    name: "Education & Training",
+    icon: GraduationCap,
+    accent: "blue",
+    color: "hsl(218, 100%, 50%)",
+    bg: "hsla(218, 100%, 50%, 0.08)",
+    href: "/atom/education",
+    tagline: "Course promos for RTOs, universities & training providers",
+    bullets: [
+      "Promote courses, qualifications, and micro-credentials visually",
+      "Highlight career outcomes, delivery modes, and enrolment paths",
+      "10 qualification levels from short courses to master's degrees",
+      "Replace $2k+ video production with a single form submission",
+    ],
+    price: "From $19",
+  },
 ];
 
 const iconComponents: Record<string, React.ElementType> = {
-  Building2, Heart, Stethoscope, Wrench, UtensilsCrossed,
+  Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap,
 };
 
 export default function IndustriesPage() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -98,6 +98,16 @@ const templates = [
     accent: "orange",
     status: "active" as const,
     href: "/atom/hospitality",
+    badge: "New",
+  },
+  {
+    id: "education",
+    name: "Education & Training",
+    icon: GraduationCap,
+    description: "Course promos for RTOs, universities, colleges, and online training providers.",
+    accent: "blue",
+    status: "active" as const,
+    href: "/atom/education",
     badge: "New",
   },
   {
