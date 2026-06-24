@@ -384,6 +384,16 @@ export default function AtomPage() {
               >
                 🧘 Client: Reiki (English)
               </button>
+              <button
+                onClick={() => setVideoTab("real-estate")}
+                className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${
+                  videoTab === "real-estate"
+                    ? "bg-gradient-to-r from-blue-600 to-orange-500 text-white shadow-lg"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                }`}
+              >
+                🏡 Real Estate Sample — 40s
+              </button>
             </div>
 
             <div className="atom-video-ring max-w-sm mx-auto rounded-2xl overflow-hidden border border-blue-500/20 shadow-2xl shadow-blue-500/5">
@@ -399,14 +409,27 @@ export default function AtomPage() {
                 <video key="reiki-hi" className="w-full h-auto" controls playsInline>
                   <source src="/reiki-promo-hindi.mp4" type="video/mp4" />
                 </video>
-              ) : (
+              ) : videoTab === "reiki-en" ? (
                 <video key="reiki-en" className="w-full h-auto" controls playsInline>
                   <source src="/reiki-promo-english.mp4" type="video/mp4" />
+                </video>
+              ) : (
+                <video key="real-estate" className="w-full h-auto" controls playsInline>
+                  <source src="/atom-real-estate-demo.mp4" type="video/mp4" />
                 </video>
               )}
             </div>
 
-            {videoTab !== "reiki-en" ? (
+            {videoTab === "real-estate" ? (
+              <div className="mt-4 inline-flex flex-col items-center gap-1">
+                <div className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full bg-gradient-to-r from-[rgba(0,110,254,0.1)] to-[rgba(232,100,44,0.1)] text-blue-400">
+                  🏡 Atom Generated — 480p sample
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Your paid video will be delivered in 720p-1080p HD with higher quality and custom branding.
+                </p>
+              </div>
+            ) : videoTab !== "reiki-en" ? (
               <div className="mt-4 inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full bg-gradient-to-r from-[rgba(0,110,254,0.1)] to-[rgba(232,100,44,0.1)] text-blue-400">
                 🥩 Eating our own dogfood — Atom made this
               </div>
