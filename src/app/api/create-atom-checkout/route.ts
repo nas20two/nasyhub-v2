@@ -5,7 +5,7 @@ const STRIPE_API = "https://api.stripe.com/v1";
 const TIER_PRICES: Record<string, { amount: number; name: string; desc: string }> = {
   basic: { amount: 1900, name: "Atom Basic", desc: "Template visuals + generated music. 60-second MP4 delivered in 24h." },
   premium: { amount: 3900, name: "Atom Premium", desc: "Custom artwork + genre-matched music + 4-scene cinematic." },
-  pro: { amount: 9900, name: "Atom Pro", desc: "Full promo package: short + stills + captions + social copy." },
+  pro: { amount: 6900, name: "Atom Pro", desc: "Two 60-second shorts + still frames + captions + social copy." },
 };
 
 export async function POST(req: NextRequest) {

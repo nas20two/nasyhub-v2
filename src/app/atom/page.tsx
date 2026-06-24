@@ -140,11 +140,12 @@ const tiers = [
   },
   {
     name: "Pro",
-    price: 99,
-    desc: "Full promo package: short + stills + captions + social copy.",
+    price: 69,
+    desc: "Two 60-second shorts + still frames + captions + social copy.",
     features: [
       "Everything in Premium, plus:",
-      "3 additional still frames",
+      "2× 60-second videos",
+      "3 additional still frames per video",
       "Auto-generated captions",
       "Social media copy (TikTok, IG, YT)",
       "Priority 12h delivery",
