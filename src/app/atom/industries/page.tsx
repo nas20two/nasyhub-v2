@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Heart, Stethoscope, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car, Briefcase, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -139,6 +139,23 @@ const industries = [
       "11 business types: dealers, detailers, mechanics, car wash, rentals",
       "6 vibes: premium, professional, sporty, family, fast, budget",
       "Replace $3k+ commercial shoots with a single form submission",
+    ],
+    price: "From $19",
+  },
+  {
+    id: "professional-services",
+    name: "Professional Services",
+    icon: Briefcase,
+    accent: "blue",
+    color: "hsl(218, 100%, 50%)",
+    bg: "hsla(218, 100%, 50%, 0.08)",
+    href: "/atom/professional-services",
+    tagline: "Brand videos for consultants, accountants, lawyers & agencies",
+    bullets: [
+      "Showcase your expertise, services, and client relationships",
+      "13 professions: consultant, accountant, lawyer, broker, coach, agency",
+      "6 brand styles: professional, modern, boutique, corporate, creative, friendly",
+      "Replace $2k+ corporate video production with one form",
     ],
     price: "From $19",
   },

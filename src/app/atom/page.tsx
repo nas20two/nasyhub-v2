@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car } from "lucide-react";
+import { Sparkles, Music, Film, ArrowRight, Building2, Heart, Stethoscope, MoreHorizontal, Check, AtomIcon, Volume2, Wrench, UtensilsCrossed, GraduationCap, Dumbbell, Car, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -128,6 +128,16 @@ const templates = [
     accent: "blue",
     status: "active" as const,
     href: "/atom/automotive",
+    badge: "New",
+  },
+  {
+    id: "professional-services",
+    name: "Professional Services",
+    icon: Briefcase,
+    description: "Brand videos for consultants, accountants, lawyers, brokers, and agencies.",
+    accent: "blue",
+    status: "active" as const,
+    href: "/atom/professional-services",
     badge: "New",
   },
   {
