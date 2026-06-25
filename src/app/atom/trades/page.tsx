@@ -302,7 +302,11 @@ export default function TradesPage() {
                       placeholder="Describe a recent transformation project. E.g. Complete bathroom renovation — old 80s tiles replaced with premium matte black fixtures, frameless glass shower, heated flooring."
                       className={`${inputClass} min-h-[80px] resize-y`} />
                   </div>
-                  <p className="text-xs text-muted-foreground">Describe the transformation in detail — the AI will use your uploaded photos to match the description.</p>
+                  <label className="border-2 border-dashed border-border rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 block">
+                    <Upload className="w-6 h-6 mx-auto text-muted-foreground mb-1.5" />
+                    <p className="text-sm text-muted-foreground">Upload before/after or project photos <span className="text-xs">(optional — photos above required)</span></p>
+                    <input type="file" accept="image/*" multiple onChange={handlePhotosUpload} className="hidden" disabled={uploadingPhoto} />
+                  </label>
                   <div>
                     <label className={labelClass}>Certifications / Licences</label>
                     <input type="text" value={form.certifications} onChange={(e) => updateField("certifications", e.target.value)}

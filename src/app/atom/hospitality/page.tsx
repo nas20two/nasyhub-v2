@@ -239,7 +239,11 @@ export default function HospitalityPage() {
 
               {/* Uploads */}
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm">
-                <p className="text-xs text-muted-foreground">Describe the venue atmosphere and menu highlights — the AI will use your uploaded photos to match the description.</p>
+                <label className="border-2 border-dashed border-border rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 block">
+                    <Upload className="w-6 h-6 mx-auto text-muted-foreground mb-1.5" />
+                    <p className="text-sm text-muted-foreground">Upload venue photos or menu <span className="text-xs">(optional — photos above required)</span></p>
+                    <input type="file" accept="image/*" multiple onChange={handlePhotosUpload} className="hidden" disabled={uploadingPhoto} />
+                  </label>
               </div>
 
               {/* Contact & Language */}
