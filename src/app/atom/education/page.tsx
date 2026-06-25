@@ -257,10 +257,7 @@ export default function EducationPage() {
 
               {/* Uploads */}
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm">
-                <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-blue-500/40 transition-colors cursor-pointer">
-                  <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Upload campus photos, logos, or course materials (optional)</p>
-                </div>
+                <p className="text-xs text-muted-foreground">Describe the learning environment and programs — the AI will use your uploaded photos to match the description.</p>
               </div>
 
               {/* Contact & Language */}

@@ -302,10 +302,7 @@ export default function TradesPage() {
                       placeholder="Describe a recent transformation project. E.g. Complete bathroom renovation — old 80s tiles replaced with premium matte black fixtures, frameless glass shower, heated flooring."
                       className={`${inputClass} min-h-[80px] resize-y`} />
                   </div>
-                  <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-blue-500/40 transition-colors cursor-pointer">
-                    <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Upload before/after image (optional)</p>
-                  </div>
+                  <p className="text-xs text-muted-foreground">Describe the transformation in detail — the AI will use your uploaded photos to match the description.</p>
                   <div>
                     <label className={labelClass}>Certifications / Licences</label>
                     <input type="text" value={form.certifications} onChange={(e) => updateField("certifications", e.target.value)}
