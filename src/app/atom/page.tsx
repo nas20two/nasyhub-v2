@@ -632,7 +632,7 @@ export default function AtomPage() {
               </button>
 
               <p className="text-xs text-muted-foreground text-center mt-3">
-                Delivered within 24 hours. No subscription. Cancel anytime before delivery.
+                Delivered within 24 hours. Change your mind? Full refund within 4 hours.
               </p>
             </div>
           </motion.div>
