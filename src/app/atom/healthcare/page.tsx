@@ -93,6 +93,43 @@ export default function HealthcarePage() {
     });
   }, []);
 
+  const compressImage = (file: File): Promise<string> => {
+    const maxW = 1080;
+    return new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let { width, height } = img;
+        if (width > maxW) { height = (maxW / width) * height; width = maxW; }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  };
+
+  const handlePhotosUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploadingPhoto(true);
+    const newPhotos: string[] = [];
+    const maxNew = 6 - form.photos.length;
+    for (const file of Array.from(files).slice(0, maxNew)) {
+      const compressed = await compressImage(file);
+      newPhotos.push(compressed);
+    }
+    updateField("photos", [...form.photos, ...newPhotos]);
+    setUploadingPhoto(false);
+  };
+
+  const removePhoto = (index: number) => {
+    updateField("photos", form.photos.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -189,6 +226,63 @@ export default function HealthcarePage() {
               onSubmit={handleSubmit}
               className="space-y-6"
             >
+              {/* Photo Upload */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Upload photos of your work * <span className="text-muted-foreground font-normal">({form.photos.length}/6)</span>
+                </label>
+                <p className="text-xs text-muted-foreground mb-3">Showcase shots of your business, services, and team in action. 4-6 photos recommended.</p>
+                
+                {form.photos.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {form.photos.map((photo, i) => (
+                      <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-border group">
+                        <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(i)}
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                    {form.photos.length < 6 && (
+                      <label className="aspect-square rounded-xl border-2 border-dashed border-border flex items-center justify-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30">
+                        <div className="text-center">
+                          <Upload className="w-5 h-5 mx-auto text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground mt-1 block">Add more</span>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handlePhotosUpload}
+                          className="hidden"
+                          disabled={uploadingPhoto}
+                        />
+                      </label>
+                    )}
+                  </div>
+                )}
+                
+                {form.photos.length === 0 && (
+                  <label className="block p-8 rounded-xl border-2 border-dashed border-border cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 text-center">
+                    <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                    <p className="text-sm text-muted-foreground">Click to upload photos</p>
+                    <p className="text-xs text-muted-foreground mt-1">JPG, PNG, WebP — 4 minimum</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handlePhotosUpload}
+                      className="hidden"
+                      disabled={uploadingPhoto}
+                    />
+                  </label>
+                )}
+                {uploadingPhoto && <p className="text-xs text-blue-400 mt-1">Processing photos...</p>}
+              </div>
               {/* Practice Information */}
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm">
                 <h2 className="text-lg font-semibold mb-5 text-foreground">
