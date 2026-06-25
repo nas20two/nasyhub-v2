@@ -3,7 +3,7 @@ import { writeFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 
-const JOBS_DIR = path.join("/tmp", "atom-jobs");
+const JOBS_DIR = path.join(process.env.ATOM_JOBS_DIR || "/tmp", "atom-jobs");
 
 interface AtomJob {
   id: string;
@@ -11,6 +11,7 @@ interface AtomJob {
   data: Record<string, unknown>;
   email: string;
   tier?: string;
+  photos: string[]; // paths to saved photo files
   status: "pending" | "processing" | "completed" | "failed";
   createdAt: string;
   completedAt?: string;
@@ -26,31 +27,55 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "template, data, and email are required" }, { status: 400 });
     }
 
+    // Validate photos
+    const photos: string[] = data.photos || [];
+    if (!Array.isArray(photos) || photos.length < 4) {
+      return NextResponse.json({ error: "At least 4 photos are required" }, { status: 400 });
+    }
+
     // Create jobs directory
     if (!existsSync(JOBS_DIR)) {
       await mkdir(JOBS_DIR, { recursive: true });
     }
 
+    const jobId = `atom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const jobDir = path.join(JOBS_DIR, jobId);
+    await mkdir(jobDir, { recursive: true });
+
+    // Save each photo as a separate file (strip base64 prefix)
+    const photoPaths: string[] = [];
+    for (let i = 0; i < photos.length; i++) {
+      const b64 = photos[i].replace(/^data:image\/\w+;base64,/, "");
+      const ext = photos[i].startsWith("data:image/png") ? "png" : "jpg";
+      const photoPath = path.join(jobDir, `photo-${i + 1}.${ext}`);
+      await writeFile(photoPath, Buffer.from(b64, "base64"));
+      photoPaths.push(photoPath);
+    }
+
+    // Strip photos from data before saving clean job JSON
+    const { photos: _, ...cleanData } = data;
+
     const job: AtomJob = {
-      id: `atom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      id: jobId,
       template,
-      data,
+      data: cleanData,
       email,
       tier: tier || "basic",
+      photos: photoPaths,
       status: "pending",
       createdAt: new Date().toISOString(),
     };
 
     await writeFile(
-      path.join(JOBS_DIR, `${job.id}.json`),
+      path.join(jobDir, "job.json"),
       JSON.stringify(job, null, 2)
     );
 
-    console.log(`[Atom] New job created: ${job.id} — ${template} — ${email}`);
+    console.log(`[Atom] New job created: ${jobId} — ${template} — ${email} — ${photoPaths.length} photos`);
 
     return NextResponse.json({
       success: true,
-      jobId: job.id,
+      jobId,
       message: "Your video is being processed. You'll receive an email within 24 hours with your download link.",
     });
   } catch (err) {
@@ -68,7 +93,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const jobPath = path.join(JOBS_DIR, `${jobId}.json`);
+    const jobPath = path.join(JOBS_DIR, jobId, "job.json");
     if (!existsSync(jobPath)) {
       return NextResponse.json({ error: "Job not found" }, { status: 404 });
     }

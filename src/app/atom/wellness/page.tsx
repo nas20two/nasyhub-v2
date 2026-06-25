@@ -20,6 +20,7 @@ interface FormData {
   language: string;
   ctaText: string;
   ctaLink: string;
+  photos: string[];
 }
 
 const defaultForm: FormData = {
@@ -35,6 +36,7 @@ const defaultForm: FormData = {
   language: "English",
   ctaText: "Book a Session",
   ctaLink: "",
+  photos: [],
 };
 
 const brandVibes = ["Calm/Serene", "Energetic", "Earthy", "Modern", "Luxe"];
@@ -54,6 +56,7 @@ export default function WellnessPage() {
   const [done, setDone] = useState(false);
   const [jobId, setJobId] = useState("");
   const [error, setError] = useState("");
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
     document.title = "Wellness & Reiki Video Template | Atom";
@@ -67,10 +70,51 @@ export default function WellnessPage() {
     });
   }, []);
 
+
+  const compressImage = (file: File, maxW = 1080): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let { width, height } = img;
+        if (width > maxW) { height = (maxW / width) * height; width = maxW; }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  };
+
+  const handlePhotosUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploadingPhoto(true);
+    const newPhotos: string[] = [];
+    const maxNew = 6 - form.photos.length;
+    for (const file of Array.from(files).slice(0, maxNew)) {
+      const compressed = await compressImage(file);
+      newPhotos.push(compressed);
+    }
+    updateField("photos", [...form.photos, ...newPhotos]);
+    setUploadingPhoto(false);
+  };
+
+  const removePhoto = (index: number) => {
+    updateField("photos", form.photos.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setError("");
+    if (form.photos.length < 4) {
+      setError("Please upload at least 4 photos of your business");
+      return;
+    }
+    setSubmitting(true);
     try {
       const res = await fetch("/api/atom-submit", {
         method: "POST",

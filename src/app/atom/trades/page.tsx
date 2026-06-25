@@ -21,6 +21,7 @@ interface FormData {
   language: string;
   ctaText: string;
   ctaLink: string;
+  photos: string[];
 }
 
 const defaultForm: FormData = {
@@ -32,6 +33,7 @@ const defaultForm: FormData = {
   location: "",
   phone: "",
   email: "",
+  photos: [],
   beforeAfterDesc: "",
   certifications: "",
   language: "English",
@@ -60,6 +62,7 @@ export default function TradesPage() {
   const [done, setDone] = useState(false);
   const [jobId, setJobId] = useState("");
   const [error, setError] = useState("");
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
     document.title = "Trades & Home Services Video Template | Atom";
@@ -73,10 +76,50 @@ export default function TradesPage() {
     });
   }, []);
 
+  const compressImage = (file: File, maxW = 1080): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let { width, height } = img;
+        if (width > maxW) { height = (maxW / width) * height; width = maxW; }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  };
+
+  const handlePhotosUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploadingPhoto(true);
+    const newPhotos: string[] = [];
+    const maxNew = 6 - form.photos.length;
+    for (const file of Array.from(files).slice(0, maxNew)) {
+      const compressed = await compressImage(file);
+      newPhotos.push(compressed);
+    }
+    updateField("photos", [...form.photos, ...newPhotos]);
+    setUploadingPhoto(false);
+  };
+
+  const removePhoto = (index: number) => {
+    updateField("photos", form.photos.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setError("");
+    if (form.photos.length < 4) {
+      setError("Please upload at least 4 photos of your work");
+      return;
+    }
+    setSubmitting(true);
     try {
       const res = await fetch("/api/atom-submit", {
         method: "POST",
@@ -146,6 +189,63 @@ export default function TradesPage() {
             className="rounded-2xl border border-border bg-card/60 backdrop-blur-sm p-6 md:p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Photo Upload */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Upload photos of your work * <span className="text-muted-foreground font-normal">({form.photos.length}/6)</span>
+                </label>
+                <p className="text-xs text-muted-foreground mb-3">Showcase before/after shots, recent projects, and your team in action. 4-6 photos recommended.</p>
+                
+                {form.photos.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {form.photos.map((photo, i) => (
+                      <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-border group">
+                        <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(i)}
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                    {form.photos.length < 6 && (
+                      <label className="aspect-square rounded-xl border-2 border-dashed border-border flex items-center justify-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30">
+                        <div className="text-center">
+                          <Upload className="w-5 h-5 mx-auto text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground mt-1 block">Add more</span>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handlePhotosUpload}
+                          className="hidden"
+                          disabled={uploadingPhoto}
+                        />
+                      </label>
+                    )}
+                  </div>
+                )}
+                
+                {form.photos.length === 0 && (
+                  <label className="block p-8 rounded-xl border-2 border-dashed border-border cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 text-center">
+                    <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                    <p className="text-sm text-muted-foreground">Click to upload photos</p>
+                    <p className="text-xs text-muted-foreground mt-1">JPG, PNG, WebP — 4 minimum</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handlePhotosUpload}
+                      className="hidden"
+                      disabled={uploadingPhoto}
+                    />
+                  </label>
+                )}
+                {uploadingPhoto && <p className="text-xs text-blue-400 mt-1">Processing photos...</p>}
+              </div>
               {/* Business Info */}
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm space-y-4">
                 <h2 className="text-lg font-semibold text-foreground">Business Info</h2>

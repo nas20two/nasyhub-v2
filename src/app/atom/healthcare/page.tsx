@@ -22,6 +22,7 @@ interface FormData {
   language: string;
   ctaText: string;
   ctaLink: string;
+  photos: string[];
 }
 
 const defaultForm: FormData = {
@@ -39,6 +40,7 @@ const defaultForm: FormData = {
   language: "English",
   ctaText: "Book an Appointment",
   ctaLink: "",
+  photos: [],
 };
 
 const specialties = [
@@ -77,6 +79,7 @@ export default function HealthcarePage() {
   const [done, setDone] = useState(false);
   const [jobId, setJobId] = useState("");
   const [error, setError] = useState("");
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
     document.title = "Health Education Video Template | Atom";
