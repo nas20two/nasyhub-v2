@@ -181,6 +181,64 @@ export default function HospitalityPage() {
             className="rounded-2xl border border-border bg-card/60 backdrop-blur-sm p-6 md:p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+
+              {/* Photo Upload */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Upload photos of your work * <span className="text-muted-foreground font-normal">({form.photos.length}/6)</span>
+                </label>
+                <p className="text-xs text-muted-foreground mb-3">Showcase your venue ambiance, signature dishes, and guest experience. 4-6 photos recommended.</p>
+                
+                {form.photos.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {form.photos.map((photo, i) => (
+                      <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-border group">
+                        <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(i)}
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                    {form.photos.length < 6 && (
+                      <label className="aspect-square rounded-xl border-2 border-dashed border-border flex items-center justify-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30">
+                        <div className="text-center">
+                          <Upload className="w-5 h-5 mx-auto text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground mt-1 block">Add more</span>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handlePhotosUpload}
+                          className="hidden"
+                          disabled={uploadingPhoto}
+                        />
+                      </label>
+                    )}
+                  </div>
+                )}
+                
+                {form.photos.length === 0 && (
+                  <label className="block p-8 rounded-xl border-2 border-dashed border-border cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 text-center">
+                    <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                    <p className="text-sm text-muted-foreground">Click to upload photos</p>
+                    <p className="text-xs text-muted-foreground mt-1">JPG, PNG, WebP — 4 minimum</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handlePhotosUpload}
+                      className="hidden"
+                      disabled={uploadingPhoto}
+                    />
+                  </label>
+                )}
+                {uploadingPhoto && <p className="text-xs text-blue-400 mt-1">Processing photos...</p>}
+              </div>
               {/* Venue Details */}
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm space-y-4">
                 <h2 className="text-lg font-semibold text-foreground">Venue Details</h2>
@@ -241,7 +299,7 @@ export default function HospitalityPage() {
               <div className="p-6 rounded-2xl border border-border bg-card/80 backdrop-blur-sm">
                 <label className="border-2 border-dashed border-border rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 transition-colors bg-card/30 block">
                     <Upload className="w-6 h-6 mx-auto text-muted-foreground mb-1.5" />
-                    <p className="text-sm text-muted-foreground">Upload venue photos or menu <span className="text-xs">(optional — photos above required)</span></p>
+                    <p className="text-sm text-muted-foreground">Upload additional photos <span className="text-xs">(optional)</span></p>
                     <input type="file" accept="image/*" multiple onChange={handlePhotosUpload} className="hidden" disabled={uploadingPhoto} />
                   </label>
               </div>
