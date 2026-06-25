@@ -4,6 +4,7 @@ import { existsSync } from "fs";
 import path from "path";
 
 const JOBS_DIR = path.join(process.env.ATOM_JOBS_DIR || "/tmp", "atom-jobs");
+const WEBHOOK_URL = process.env.ATOM_WEBHOOK_URL || "";
 
 interface AtomJob {
   id: string;
@@ -72,6 +73,33 @@ export async function POST(req: NextRequest) {
     );
 
     console.log(`[Atom] New job created: ${jobId} — ${template} — ${email} — ${photoPaths.length} photos`);
+
+    // Forward to local processor via webhook
+    if (WEBHOOK_URL) {
+      try {
+        const webhookPayload = {
+          jobId,
+          template,
+          data: cleanData,
+          email,
+          photos: data.photos.slice(0, 10), // send base64 photos (max 10)
+        };
+        const wh = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(webhookPayload),
+          signal: AbortSignal.timeout(15000),
+        });
+        if (wh.ok) {
+          console.log(`[Atom] Webhook forwarded: ${jobId}`);
+        } else {
+          console.error(`[Atom] Webhook failed: ${wh.status}`);
+        }
+      } catch (whErr) {
+        console.error(`[Atom] Webhook error for ${jobId}:`, whErr);
+        // Don't fail the request — webhook is best-effort
+      }
+    }
 
     return NextResponse.json({
       success: true,
