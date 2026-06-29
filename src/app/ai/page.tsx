@@ -1,17 +1,34 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Zap, Brain, Search, Shield, BarChart3, Clock } from "lucide-react";
+import { ArrowLeft, Zap, Brain, Search, Shield, BarChart3, Clock, ClipboardCheck, TrendingDown } from "lucide-react";
 import Link from "next/link";
 
-const services = [
+const consulting = [
+  {
+    icon: ClipboardCheck,
+    title: "AI Readiness Audit",
+    description: "Free assessment + $99 Pro Report. Evaluate your organisation's AI maturity and get a strategic roadmap with investment estimates.",
+    metrics: "Free assessment",
+    url: "https://www.ai-audit-now.com",
+  },
   {
     icon: Search,
     title: "Tender Intelligence",
-    description: "AI-powered government tender discovery and analysis. Real-time AusTender OCDS API integration with MCP architecture.",
-    metrics: "Live at tenders.nasyhub.com",
+    description: "Free daily searches + $19/mo premium. AI-powered government tender discovery and analysis with real-time AusTender integration.",
+    metrics: "$19/mo subscription",
     url: "https://tenders.nasyhub.com",
   },
+  {
+    icon: TrendingDown,
+    title: "Agent Cost Optimization",
+    description: "Free waste score + $99 Pro Report. Find out if your AI agents are overpaying and where to save.",
+    metrics: "Free score",
+    url: "https://www.ai-audit-now.com/agent-cost",
+  },
+];
+
+const services = [
   {
     icon: Brain,
     title: "Knowledge Systems",
@@ -33,12 +50,6 @@ const services = [
 ];
 
 const tools = [
-  {
-    title: "AI Readiness Audit",
-    description: "Free assessment tool. Discover your organization's AI maturity and get a personalized roadmap.",
-    url: "https://ai-readiness-audit-orpin.vercel.app",
-    cta: "Take the Audit",
-  },
   {
     title: "AI Explainy",
     description: "V2: Jargon buster + Chat + Repo Explainer. Paste any GitHub URL for instant architecture analysis.",
@@ -133,6 +144,45 @@ export default function AIPage() {
         </div>
       </section>
 
+      {/* Consulting Toolkit */}
+      <section className="py-20 px-4 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-primary text-sm tracking-widest uppercase mb-4">Consulting Toolkit</p>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Three Products. One Consulting Approach.</h2>
+            <p className="text-muted-foreground">Free pull tools with premium upsells for mid-market organisations</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {consulting.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md cursor-pointer"
+                onClick={() => window.open(item.url, '_blank')}
+              >
+                <item.icon className="w-10 h-10 mb-4 text-primary" />
+                <h3 className="text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
+                <p className="text-muted-foreground mb-4">{item.description}</p>
+                <span className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                  Try it free
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services */}
       <section className="py-20 px-4 border-t border-border">
         <div className="max-w-6xl mx-auto">
@@ -155,13 +205,12 @@ export default function AIPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md ${service.url ? 'cursor-pointer' : ''}`}
-                onClick={() => service.url && window.open(service.url, '_blank')}
+                className={`p-6 rounded-xl border border-border bg-card/50 hover:bg-card transition-colors shadow-sm hover:shadow-md`}
               >
                 <service.icon className="w-10 h-10 mb-4 text-primary" />
                 <h3 className="text-xl font-semibold mb-2 text-foreground">{service.title}</h3>
                 <p className="text-muted-foreground mb-4">{service.description}</p>
-                <span className={`text-sm font-medium px-3 py-1 rounded-full ${service.url ? 'text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/30' : 'text-primary bg-primary/10'}`}>
+                <span className={`text-sm font-medium px-3 py-1 rounded-full text-primary bg-primary/10`}>
                   {service.metrics}
                 </span>
               </motion.div>
@@ -184,7 +233,7 @@ export default function AIPage() {
             <p className="text-muted-foreground">Free tools to explore your AI opportunities</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {tools.map((tool, index) => (
               <motion.a
                 key={tool.title}
