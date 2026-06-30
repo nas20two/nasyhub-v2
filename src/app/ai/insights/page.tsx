@@ -17,6 +17,7 @@ import {
   MessageSquare,
   Copy,
   Check,
+  Mail,
 } from "lucide-react";
 import Link from "next/link";
 import { newsItems } from "./news-data";
@@ -127,9 +128,64 @@ function ShareButton() {
   );
 }
 
+const industries = [
+  { value: "", label: "Your industry (optional)" },
+  { value: "government", label: "Government" },
+  { value: "healthcare", label: "Healthcare" },
+  { value: "manufacturing", label: "Manufacturing" },
+  { value: "finance", label: "Finance & Insurance" },
+  { value: "technology", label: "Technology" },
+  { value: "education", label: "Education" },
+  { value: "other", label: "Other" },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.nasyhub.com/ai/insights",
+      "name": "AI Insights — Curated AI News & Market Trends",
+      "description": "Weekly AI news, LLM releases, tool launches, and market trends — curated by a practising AI Solutions Engineer.",
+    },
+    ...newsItems.map((item) => ({
+      "@type": "NewsArticle",
+      "headline": item.headline,
+      "description": item.summary,
+      "datePublished": item.date,
+      "author": { "@type": "Person", "name": "NaSy Hub" },
+    })),
+  ],
+};
+
 export default function AIInsightsPage() {
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadIndustry, setLeadIndustry] = useState("");
+  const [leadStatus, setLeadStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadEmail) return;
+    setLeadStatus("loading");
+    try {
+      const res = await fetch("/api/insights-signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: leadEmail, industry: leadIndustry }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      setLeadStatus("success");
+    } catch {
+      setLeadStatus("error");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -345,6 +401,71 @@ export default function AIInsightsPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Lead Magnet */}
+      <section className="py-20 px-4 border-t border-border bg-secondary/30">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Mail className="w-10 h-10 mx-auto mb-4 text-primary" />
+            <h2 className="text-3xl font-bold mb-4 text-foreground">
+              Get AI Briefing in Your Inbox
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+              Weekly curated AI news, LLM releases, and market trends.
+              Zero spam. Unsubscribe anytime.
+            </p>
+            {leadStatus === "success" ? (
+              <p className="text-lg text-green-600 font-medium">
+                ✓ Subscribed! Check your inbox for the next briefing.
+              </p>
+            ) : (
+              <form
+                onSubmit={handleLeadSubmit}
+                className="max-w-md mx-auto flex flex-col gap-3"
+              >
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={leadEmail}
+                    onChange={(e) => setLeadEmail(e.target.value)}
+                    className="flex-1 min-w-0 px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
+                    required
+                    disabled={leadStatus === "loading"}
+                  />
+                  <button
+                    type="submit"
+                    disabled={leadStatus === "loading" || !leadEmail}
+                    className="shrink-0 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                  >
+                    {leadStatus === "loading" ? "..." : "Subscribe"}
+                  </button>
+                </div>
+                <select
+                  value={leadIndustry}
+                  onChange={(e) => setLeadIndustry(e.target.value)}
+                  className="px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  disabled={leadStatus === "loading"}
+                >
+                  {industries.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+                {leadStatus === "error" && (
+                  <p className="text-sm text-red-500">Something went wrong. Try again.</p>
+                )}
+              </form>
+            )}
+          </motion.div>
         </div>
       </section>
 

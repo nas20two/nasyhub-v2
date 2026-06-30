@@ -1,8 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Music, Smartphone, Mail, ArrowRight, Newspaper, FileCheck, AtomIcon, Heart } from "lucide-react";
+import { useState } from "react";
+import {
+  Cpu, Music, Smartphone, Mail, ArrowRight, Newspaper, FileCheck, AtomIcon, Heart,
+} from "lucide-react";
 import Link from "next/link";
+import { newsItems } from "./ai/insights/news-data";
 
 const sections = [
   {
@@ -54,6 +58,7 @@ const sections = [
     title: "AI Insights",
     description: "Curated AI news, tool launches, LLM releases, and market trends. Updated weekly.",
     color: "primary",
+    leadGen: true,
   },
   {
     href: "/marketplace",
@@ -63,6 +68,82 @@ const sections = [
     color: "primary",
   },
 ];
+
+function AIInsightsCard() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const latestHeadline = newsItems[0]?.headline ?? "";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/insights-signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Failed to subscribe");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <Link href="/ai/insights" className="block">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 + 6 * 0.1, duration: 0.6 }}
+        className="group relative p-8 rounded-2xl border border-border bg-card/80 backdrop-blur-sm hover:bg-card transition-all cursor-pointer shadow-lg hover:shadow-xl text-left"
+      >
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-orange-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <Newspaper className="w-10 h-10 mb-4 text-primary" />
+        <h3 className="text-xl font-semibold mb-2 text-foreground flex items-center gap-3">
+          AI Insights
+        </h3>
+        {latestHeadline && (
+          <p className="text-xs text-muted-foreground/70 mb-4 italic line-clamp-2">
+            Latest: {latestHeadline}
+          </p>
+        )}
+        {status === "success" ? (
+          <p className="text-sm text-green-600 font-medium">✓ Subscribed! Check your inbox.</p>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+            <input
+              type="email"
+              placeholder="Get weekly AI briefing"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 min-w-0 px-3 py-2 text-sm rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+              disabled={status === "loading"}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading" || !email}
+              className="shrink-0 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+            >
+              {status === "loading" ? "..." : "Subscribe"}
+            </button>
+          </form>
+        )}
+        {status === "error" && (
+          <p className="text-xs text-red-500 mt-2">Something went wrong. Try again.</p>
+        )}
+        <div className="flex items-center text-sm font-medium text-primary mt-3 group-hover:opacity-80 transition-colors">
+          Explore
+          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
 
 export default function Home() {
   return (
@@ -144,33 +225,45 @@ export default function Home() {
 
         {/* Navigation Cards */}
         <div className="grid md:grid-cols-2 gap-6">
-          {sections.map((section, index) => (
-            <Link key={section.title} href={section.href}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-                className="group relative p-8 rounded-2xl border border-border bg-card/80 backdrop-blur-sm hover:bg-card transition-all cursor-pointer shadow-lg hover:shadow-xl text-left"
-              >
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-orange-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <section.icon className={`w-10 h-10 mb-4 ${section.color === "amber" ? "text-amber-600" : "text-primary"}`} />
-                <h3 className="text-xl font-semibold mb-2 text-foreground flex items-center gap-3">
-                  {section.title}
-                  {section.badge && (
-                    <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 border border-amber-500/30">
-                      {section.badge}
-                    </span>
-                  )}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">{section.description}</p>
-                <div className={`flex items-center text-sm font-medium ${section.color === "amber" ? "text-amber-600" : "text-primary"} group-hover:opacity-80 transition-colors`}>
-                  {section.badge ? "Coming Soon" : "Explore"}
-                  {!section.badge && <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
-                </div>
-              </motion.div>
-            </Link>
-          ))}
+          {sections.map((section, index) =>
+            section.leadGen ? (
+              <AIInsightsCard key={section.title} />
+            ) : (
+              <Link key={section.title} href={section.href}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="group relative p-8 rounded-2xl border border-border bg-card/80 backdrop-blur-sm hover:bg-card transition-all cursor-pointer shadow-lg hover:shadow-xl text-left"
+                >
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-orange-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <section.icon
+                    className={`w-10 h-10 mb-4 ${section.color === "amber" ? "text-amber-600" : "text-primary"}`}
+                  />
+                  <h3 className="text-xl font-semibold mb-2 text-foreground flex items-center gap-3">
+                    {section.title}
+                    {section.badge && (
+                      <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 border border-amber-500/30">
+                        {section.badge}
+                      </span>
+                    )}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">{section.description}</p>
+                  <div
+                    className={`flex items-center text-sm font-medium ${
+                      section.color === "amber" ? "text-amber-600" : "text-primary"
+                    } group-hover:opacity-80 transition-colors`}
+                  >
+                    {section.badge ? "Coming Soon" : "Explore"}
+                    {!section.badge && (
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    )}
+                  </div>
+                </motion.div>
+              </Link>
+            ),
+          )}
         </div>
       </div>
 
